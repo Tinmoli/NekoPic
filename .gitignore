@@ -1,0 +1,29 @@
+# 本机运行配置和图库
+/config.toml
+/config.yaml
+/view/
+/pc/
+/pe/
+/PC/
+/PE/
+/logs/
+
+# 完整测试环境、编译产物和临时工具不上传源码仓库
+/test-run/
+/bin/
+/.tools/
+/.cache/
+/nekopic
+/nekopic.exe
+/nekopic-linux-*
+/nekopic-windows-*
+/SHA256SUMS
+
+# 编辑器备份和本机测试输出
+*~
+*.bak
+*.tmp
+*.test
+coverage.out
+.DS_Store
+Thumbs.db

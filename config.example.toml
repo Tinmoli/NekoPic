@@ -1,0 +1,87 @@
+# 修改后重启生效。图片、网页副本和日志默认保存在程序旁边的 view、web、logs 文件夹。
+
+# 图片链接的域名前缀，影响接口返回的图片地址形式。
+# 留空（推荐）：返回相对地址，本机、局域网设备、套域名反代都能正常显示图片。
+# 填写域名：比如 https://img.example.com，接口返回带这个域名的完整链接，
+# 适合外部程序需要完整链接的场景；填错会导致部分设备看不到图片。
+base_url = ""
+
+[catalog]
+# 自动识别开关，默认关闭。开启后，启动时发现 view 文件夹下有未配置的新文件夹，
+# 且里面至少有一张受支持的图片，就自动把分类追加写入本配置文件并立即生效。
+# 运行中新增的文件夹要重启才会识别；以 . 开头的文件夹永远不会被收编。
+auto_detect = false
+
+# 图库分类：一段 [[categories]] 就是一个分类。name 是访问端点（同时也是 URL 的一部分），
+# directory 是图库文件夹名，可省略（默认放在 view 文件夹下，即 view/名字）。
+# 相对路径基于主程序所在目录。想再加一个分类，去掉下面两行的注释即可，
+# 把图片放进 view/acg 后重启，端点 /acg 自动出现：
+# [[categories]]
+# name = "acg"
+
+[[categories]]
+name = "pc"   # 图库在 view/pc
+
+[[categories]]
+name = "pe"   # 图库在 view/pe
+
+[site]
+# 网页名称，浏览图片时也显示这个名称。
+name = "NekoPic 随机图片"
+# 图标的 http/https 地址。不填就只显示名称，不显示图标。
+icon_url = ""
+
+[server]
+# 0.0.0.0 允许局域网里其他设备直接访问；只想本机访问时改成 127.0.0.1。
+host = "0.0.0.0"
+port = 8505
+# 反代服务器的 IP 范围。同机反代不用改；单个 IPv4 地址后加 /32。
+trusted_proxies = ["127.0.0.1/32", "::1/128"]
+# 用哪个请求头获取访客 IP。一般保持默认；也支持 X-Real-IP。
+client_ip_header = "X-Forwarded-For"
+
+[cdn]
+# 没用 CDN 就留空；使用时填写 CDN 厂商提供的回源 IP 范围。
+trusted_proxies = []
+# 一般保持默认。Cloudflare 也可以填 CF-Connecting-IP。
+# 还支持 X-Real-IP、True-Client-IP、X-Client-IP。
+client_ip_header = "X-Forwarded-For"
+
+[security]
+# 允许访问的访客 IP，[] 表示不限制。例如 ["192.168.1.5/32"]。
+allowed_ips = []
+# 允许访问的域名，[] 表示不限制。例如 ["img.example.com"]，不用写协议和端口。
+allowed_hosts = []
+# 自定义网页里允许内联样式（<style> 标签和 style 属性）。
+# 设为 false 恢复最严格的样式限制，自定义页面只能引用 web/style.css。
+inline_styles = true
+
+# /api 和 /view/auto 按设备指向的分类。默认 desktop=pc、mobile=pe；
+# 分类改名或没有 pc/pe 时才需要设置，引用的 name 必须存在。
+# [adaptive]
+# desktop = "pc"
+# mobile = "pe"
+
+[image]
+# 像素上限（宽×高），0 表示不限制。
+max_pixels = 0
+# 单张图片大小上限，单位是字节。52428800 约等于 50 MB。
+max_file_bytes = 52428800
+# 每隔多少分钟检查新图片；0 表示只在启动时检查。
+refresh_interval = 5
+
+[ratelimit]
+# 是否限制同一访客的请求次数，true 开启，false 关闭。
+enabled = true
+# 每 10 秒最多请求多少次随机图片，超过后暂停访问 block_duration 秒。
+requests_per_10s = 20
+block_duration = 30
+
+[log]
+# 日志同时显示在窗口并写入 logs 文件夹。文件名为时间，达到 100 MB 自动压缩。
+# text 方便直接阅读；json 适合交给日志工具处理。
+format = "text"
+# info 记录正常请求和错误；warn 只记录警告和错误；error 只记录错误。
+level = "info"
+# 是否记录访客 IP，true 记录，false 不记录。
+client_ip = true

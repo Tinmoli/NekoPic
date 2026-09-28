@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{.Name}}</title>
+  {{if .Icon}}<link rel="icon" href="{{.Icon}}">{{end}}
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="viewer">
+  <header class="viewer-header">
+    <a class="brand" href="/">{{if .Icon}}<img src="{{.Icon}}" alt="" referrerpolicy="no-referrer">{{end}}<span>{{.Name}}</span></a>
+    <a class="viewer-next" href="{{.Next}}">换一张 ↻</a>
+  </header>
+  <main class="viewer-stage">
+    {{if .Image}}<img class="viewer-image" src="{{.Image}}" alt="随机图片" referrerpolicy="no-referrer">{{else}}<p>这个分类暂时没有图片。<a href="/">返回首页</a></p>{{end}}
+  </main>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{.Name}}</title>
+  <meta name="description" content="随机发现一张喜欢的图片。">
+  {{if .Icon}}<link rel="icon" href="{{.Icon}}">{{end}}
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <a class="brand" href="/">{{if .Icon}}<img src="{{.Icon}}" alt="站点图标" referrerpolicy="no-referrer">{{end}}<span>{{.Name}}</span></a>
+      <span class="status"><span aria-hidden="true">●</span> 图片服务在线</span>
+    </header>
+    <section class="hero">
+      <p class="eyebrow">A LITTLE SURPRISE, EVERY TIME</p>
+      <h1>下一张，<br>也许刚好喜欢。</h1>
+      <p class="intro">每一次打开，都从 {{.Total}} 张图片里随机遇见一张。</p>
+      {{if .Total}}<a class="button" href="/view/dm">随机看一张 <span aria-hidden="true">↗</span></a>{{else}}<p class="empty">图库还在准备中，稍后再来看看吧。</p>{{end}}
+    </section>
+    <section class="cards" aria-label="图片分类">
+      {{range .Categories}}<a class="card" href="/view/{{.Name}}"><span class="card-label">{{.Name | upper}}</span><h2>{{.Name}} 图片 <span aria-hidden="true">↗</span></h2><p>随机浏览这个分类</p><span class="count">{{.Count}} 张图片</span></a>
+      {{end}}<a class="card accent" href="/view/auto"><span class="card-label">JUST FOR YOU</span><h2>自动选择 <span aria-hidden="true">↗</span></h2><p>根据你的设备选择分类</p><span class="count">打开即看</span></a>
+    </section>
+    <section class="api" aria-labelledby="api-title">
+      <h2 id="api-title">开发者接口</h2>
+      <p>使用 GET 请求访问以下地址。接入网站或程序请使用下面的接口。</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>地址</th><th>用途</th></tr></thead>
+          <tbody>
+            {{range .Categories}}<tr><td><a href="/{{.Name}}"><code>/{{.Name}}</code></a></td><td>随机{{.Name}}图片，跳转到图片文件</td></tr>
+            {{end}}<tr><td><a href="/dm"><code>/dm</code></a></td><td>从全部分类中随机选择</td></tr>
+            <tr><td><a href="/api"><code>/api</code></a></td><td>根据设备自动选择分类</td></tr>
+            <tr><td><a href="/dm?return=json"><code>/dm?return=json</code></a></td><td>返回图片地址、宽度、高度和格式</td></tr>
+            <tr><td><a href="/dm?return=all"><code>/dm?return=all</code></a></td><td>返回全部图片地址，每行一个</td></tr>
+            <tr><td><code>/分类名/文件名</code></td><td>访问图片文件，支持 HEAD 和分段下载</td></tr>
+            <tr><td><a href="/health/ready"><code>/health/ready</code></a></td><td>查看图片数量和服务状态</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>每个分类都支持 <code>?return=json</code> 和 <code>?return=all</code>。JSON 中的 <code>size</code> 表示图片格式，例如 jpg，并不是文件大小。</p>
+    </section>
+    <footer><span>{{.Name}}</span><span>每次打开，一点新鲜。</span></footer>
+  </main>
+</body>
+</html>

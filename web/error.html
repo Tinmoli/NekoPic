@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{.Code}} · {{.Name}}</title>
+  {{if .Icon}}<link rel="icon" href="{{.Icon}}">{{end}}
+  <link rel="stylesheet" href="/assets/style.css">
+  {{if gt .Retry 0}}<meta http-equiv="refresh" content="{{.Retry}}">{{end}}
+</head>
+<body class="error-page">
+  <main class="error-card">
+    <p class="card-label">{{.Code}}</p>
+    <h1>{{.Title}}</h1>
+    <p class="error-message">{{.Message}}</p>
+    {{if gt .Retry 0}}<p class="error-hint">页面将在 {{.Retry}} 秒后自动重试。</p>{{end}}
+    <a class="button" href="/">回首页 <span aria-hidden="true">↗</span></a>
+  </main>
+</body>
+</html>

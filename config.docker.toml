@@ -1,0 +1,20 @@
+# 容器配置，缺省字段使用程序默认值。完整中文说明见 config.example.toml。
+# 生产部署改成真实可访问的域名或地址。
+base_url = "http://localhost:8505"
+
+[server]
+# 容器内监听所有接口；宿主机是否对外开放由 Compose 端口映射决定。
+host = "0.0.0.0"
+port = 8505
+
+[site]
+# 首页显示名与可选的 HTTP/HTTPS 图标 URL。
+name = "NekoPic 随机图片"
+icon_url = ""
+
+# 图库目录相对于 /app；由 Compose 从宿主机只读挂载。
+[[categories]]
+name = "pc"
+
+[[categories]]
+name = "pe"

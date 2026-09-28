@@ -1,0 +1,12 @@
+*
+!go.mod
+!go.sum
+!assets.go
+!config.example.toml
+!config.docker.toml
+!app/
+!app/**
+!internal/
+!internal/**
+!web/
+!web/**
